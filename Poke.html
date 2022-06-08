@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pokedex</title>
+	<link href="bootstrap.min.css" rel="stylesheet">
+	<script src="bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+	<br><br>
+	<!--Estructura de tarjetas-->
+	<div class="container">
+		<div class="row justify-content-center">
+	        <div class="col-md-12">
+	        	<div class="container">
+			        <div class="row">
+			        	<h1 style="text-align: center;">POKEDEX ALEATORIO</h1>
+			        	<br>
+			        	<button type="button" class="btn btn-outline-primary" id="random">PokeRandom</button>
+
+			        	<!--Organizando en grupo de 6 tarjetas-->
+			        	<div id="poke">
+			        		<br>
+			        		<div class="col-md-12">
+								<div class="container">
+									<div class="row">
+										<!--colocando las tarjetas en 3 por fila-->
+						        		<div class="col-4" data-aos="fade-right">
+											<div class="card border-primary mb-3" style="max-width: 20rem; " id = "pokemon-1">
+												<div class="card-header">Pokemon aleatorio no.1</div>
+												<div class="card-body">
+											    	<h4 class="card-title"></h4>
+													<img src="" style="width: 100%">
+											    	<p class="card-text"></p>
+											  </div>
+											</div>
+										</div>
+
+										<div class="col-4" data-aos="fade-right">
+											<div class="card border-primary mb-3" style="max-width: 20rem; " id = "pokemon-2">
+												<div class="card-header">Pokemon aleatorio no.2</div>
+												<div class="card-body">
+											    	<h4 class="card-title"></h4>
+													<img src="" style="width: 100%">
+											    	<p class="card-text"></p>
+											  </div>
+											</div>
+										</div>
+
+										<div class="col-4" data-aos="fade-right">
+											<div class="card border-primary mb-3" style="max-width: 20rem; " id = "pokemon-3">
+												<div class="card-header">Pokemon aleatorio no.3</div>
+												<div class="card-body">
+											    	<h4 class="card-title"></h4>
+													<img src="" style="width: 100%">
+											    	<p class="card-text"></p>
+											  </div>
+											</div>
+										</div>
+
+										<div class="col-4" data-aos="fade-right">
+											<div class="card border-primary mb-3" style="max-width: 20rem; " id = "pokemon-4">
+												<div class="card-header">Pokemon aleatorio no.4</div>
+												<div class="card-body">
+											    	<h4 class="card-title"></h4>
+													<img src="" style="width: 100%">
+											    	<p class="card-text"></p>
+											  </div>
+											</div>
+										</div>
+
+										<div class="col-4" data-aos="fade-right">
+											<div class="card border-primary mb-3" style="max-width: 20rem; " id = "pokemon-5">
+												<div class="card-header">Pokemon aleatorio no.5</div>
+												<div class="card-body">
+											    	<h4 class="card-title"></h4>
+													<img src="" style="width: 100%">
+											    	<p class="card-text"></p>
+											  </div>
+											</div>
+										</div>
+
+										<div class="col-4" data-aos="fade-right">
+											<div class="card border-primary mb-3" style="max-width: 20rem; " id = "pokemon-6">
+												<div class="card-header">Pokemon aleatorio no.6</div>
+												<div class="card-body">
+											    	<h4 class="card-title"></h4>
+													<img src="" style="width: 100%">
+											    	<p class="card-text"></p>
+											  </div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<!--Funcionamiento del proyecto en javaScript-->
+	<script type="text/javascript">
+		//variable para la lista
+		let lista =document.getElementById('poke');
+
+		//funcion para consultar los datos de la api.
+		function consultarPokemon(id, num) {
+			//conectando con la api
+		    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+		        //respuesta de la api por medio de json.
+		        .then(function (response) {
+		            response.json()
+		            .then(function (pokemon) {
+		               crearPokemon(pokemon, num)   
+		            })            
+		        })
+		}
+
+		//funcion consulta de datos aleatorios.
+		function consultarPokemones() {
+			//variables para almacenar de forma aleatoria a los pokemon.
+		    let uno = Math.floor(Math.random() * 898);
+		    let dos = Math.floor(Math.random() * 898);
+		    let tres = Math.floor(Math.random() * 898);
+		    let cuatro = Math.floor(Math.random() * 898);
+		    let cinco = Math.floor(Math.random() * 898);
+		    let seis = Math.floor(Math.random() * 898);
+
+		    //consulta de los pokemon seleccionados aleatoriamente en la funcion anterior.
+		    consultarPokemon(uno, 1);
+		    consultarPokemon(dos, 2);
+		    consultarPokemon(tres, 3);
+		    consultarPokemon(cuatro, 4);
+		    consultarPokemon(cinco, 5);
+		    consultarPokemon(seis, 6);
+		}
+
+		//funcion para mostrar los datos seleccionados en pantalla.
+		function crearPokemon(pokemon, num) {
+			//variables para obtener el nombre de los tags.
+		    let item = lista.querySelector(`#pokemon-${num}`)
+		    let imagen = item.getElementsByTagName("img")[0];
+		    let nombre = item.getElementsByTagName("h4")[0];
+
+		    //mostrar los datos en pantalla en los tags seleccionados.
+		    imagen.setAttribute("src", pokemon.sprites.front_default);
+		    nombre.textContent = pokemon.name;
+		}
+		
+		consultarPokemones();
+
+		//Funcion de refrescar la pagina para el boton pokeRandom.
+		let aleatorio =document.getElementById('random');
+		aleatorio.addEventListener('click', _=> {
+			location.reload();
+		});
+	</script>
+</body>
+</html>
